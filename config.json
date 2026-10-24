@@ -1,12 +1,11 @@
-module.exports = {
-  botName: "The Falcon MD",
-  ownerNumber: "2348122029123",
-  ownerName: "Simon tech inc",
-  prefix: "!",
-  botPic: "https://files.catbox.moe/90v8t7.png",
-  sessionName: "falcon_session",
-  channel: "https://whatsapp.com/channel/0029Vb97vPwChq6GqI44n61S",
-  group: "https://chat.whatsapp.com/LJO6ypF7xhxEvqCdkJlvG7?s=cl&p=a&mlu=4&ilr=4",
-  pairingTitle: "THE FALCON PAIR SITE",
-  port: process.env.PORT || 3000
+{
+  "botName": "The Falcon MD",
+  "ownerNumber": "2348122029123",
+  "ownerName": "Simon tech inc",
+  "prefix": "!",
+  "botPic": "https://files.catbox.moe/90v8t7.png",
+  "sessionName": "falcon_session",
+  "channel": "https://whatsapp.com/channel/0029Vb97vPwChq6GqI44n61S",
+  "group": "https://chat.whatsapp.com/LJO6ypF7xhxEvqCdkJlvG7?s=cl&p=a&mlu=4&ilr=4",
+  "pairingTitle": "THE FALCON PAIR SITE"
 }
