@@ -4,7 +4,6 @@ module.exports = {
   ownerName: "Simon tech inc",
   prefix: "!",
   botPic: "https://files.catbox.moe/90v8t7.png",
-  banner: "¯͞⎻⎼͞⎽͜͡𓆩𝅾𐀀𓆪͜͡⎽͞⎼⎻͞¯",
   sessionName: "falcon_session",
   channel: "https://whatsapp.com/channel/0029Vb97vPwChq6GqI44n61S",
   group: "https://chat.whatsapp.com/LJO6ypF7xhxEvqCdkJlvG7?s=cl&p=a&mlu=4&ilr=4",
