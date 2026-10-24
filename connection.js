@@ -1,6 +1,6 @@
 const { default: makeWASocket, useMultiFileAuthState, Browsers } = require("@whiskeysockets/baileys")
 const pino = require("pino")
-const config = require("./config")
+const config = require("./config.js") // <-- .js added
 
 async function FalconConnection() {
   const { state, saveCreds } = await useMultiFileAuthState(config.sessionName)
