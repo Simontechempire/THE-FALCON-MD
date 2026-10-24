@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>THE FALCON PAIR SITE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{background:#0a0a0a;color:#fff;text-align:center;font-family:sans-serif}
+.card{margin:30px auto;background:#111;padding:20px;border-radius:20px;max-width:400px;box-shadow:0 0 20px #00ff99}
+img{width:150px;border-radius:50%;border:3px solid #00ff99}
+input{padding:12px;width:80%;border-radius:10px;border:none;margin-top:15px}
+button{padding:12px 25px;border:none;border-radius:10px;background:#00ff99;font-weight:bold;margin-top:15px}
+#code{font-size:28px;letter-spacing:5px;color:#00ff99;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="card">
+<img src="https://files.catbox.moe/90v8t7.png">
+<h1>THE FALCON PAIR SITE</h1>
+<p>¯͞⎻⎼͞⎽͜͡𓆩𝅾𐀀𓆪͜͡⎽͞⎼⎻͞¯</p>
+<p>Enter Your WhatsApp Number With Country Code</p>
+<input type="text" id="number" placeholder="2348122029123">
+<br>
+<button onclick="getCode()">GET 8-DIGIT CODE</button>
+<p id="code"></p>
+<p id="info" style="font-size:13px;color:#aaa"></p>
+</div>
+<script>
+async function getCode(){
+  const num=document.getElementById('number').value
+  if(!num){alert("Enter number");return}
+  document.getElementById('code').innerText="WAITING..."
+  const res=await fetch('/pair?number='+num)
+  const data=await res.json()
+  if(data.code){
+    document.getElementById('code').innerText=data.code
+    document.getElementById('info').innerText="Go to WhatsApp > Linked Devices > Link with Phone Number > Enter this code"
+  }else{
+    document.getElementById('code').innerText="ERROR: "+data.error
+  }
+}
+</script>
+</body>
+</html>
