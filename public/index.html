@@ -1,42 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>THE FALCON PAIR SITE</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>THE FALCON PAIR SITE - Falcon MD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{background:#0a0a0a;color:#fff;text-align:center;font-family:sans-serif}
-.card{margin:30px auto;background:#111;padding:20px;border-radius:20px;max-width:400px;box-shadow:0 0 20px #00ff99}
-img{width:150px;border-radius:50%;border:3px solid #00ff99}
-input{padding:12px;width:80%;border-radius:10px;border:none;margin-top:15px}
-button{padding:12px 25px;border:none;border-radius:10px;background:#00ff99;font-weight:bold;margin-top:15px}
-#code{font-size:28px;letter-spacing:5px;color:#00ff99;margin-top:20px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}
+body{background:radial-gradient(circle at top,#0f2b1f 0%,#0a0a0a 60%);color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{width:100%;max-width:420px;background:rgba(17,17,17,0.9);backdrop-filter:blur(10px);padding:30px 25px;border-radius:28px;box-shadow:0 0 0 1px #1a1a1a, 0 0 40px rgba(0,255,153,0.15);text-align:center}
+.logo{width:130px;height:130px;border-radius:50%;border:3px solid #00ff99;box-shadow:0 0 20px rgba(0,255,153,0.5);object-fit:cover}
+h1{margin:15px 0 5px;font-size:26px;letter-spacing:1px}
+.sub{color:#888;font-size:13px;margin-bottom:20px}
+input{width:100%;padding:16px 18px;border-radius:14px;border:1px solid #222;background:#0f0f0f;color:#fff;font-size:16px;outline:none;transition:.2s}
+input:focus{border-color:#00ff99;box-shadow:0 0 0 3px rgba(0,255,153,0.15)}
+button.main{width:100%;padding:16px;border:none;border-radius:14px;background:#00ff99;color:#000;font-weight:800;font-size:16px;margin-top:16px;cursor:pointer;transition:.2s}
+button.main:active{transform:scale(0.98)}
+button.main:disabled{opacity:0.5}
+#codeBox{display:none;margin-top:22px;background:#0f0f0f;border:1px dashed #00ff99;border-radius:16px;padding:18px}
+#code{font-size:32px;font-weight:800;letter-spacing:8px;color:#00ff99}
+#info{font-size:12px;color:#aaa;margin-top:8px;line-height:1.4}
+.copyBtn{margin-top:12px;background:#1a1a1a;color:#fff;border:1px solid #333;padding:10px 18px;border-radius:10px;cursor:pointer}
+.footer{margin-top:20px;font-size:11px;color:#555}
+.footer a{color:#00ff99;text-decoration:none}
 </style>
 </head>
 <body>
 <div class="card">
-<img src="https://files.catbox.moe/90v8t7.png">
+<img class="logo" src="https://files.catbox.moe/90v8t7.png" alt="Falcon MD">
 <h1>THE FALCON PAIR SITE</h1>
-<p>¯͞⎻⎼͞⎽͜͡𓆩𝅾𐀀𓆪͜͡⎽͞⎼⎻͞¯</p>
-<p>Enter Your WhatsApp Number With Country Code</p>
-<input type="text" id="number" placeholder="2348122029123">
-<br>
-<button onclick="getCode()">GET 8-DIGIT CODE</button>
-<p id="code"></p>
-<p id="info" style="font-size:13px;color:#aaa"></p>
+<p class="sub">The Falcon MD • Fast & Secure Pairing</p>
+
+<input type="text" id="number" placeholder="2348122029123 (with country code)" inputmode="numeric">
+<button class="main" id="btn" onclick="getCode()">GET 8-DIGIT CODE</button>
+
+<div id="codeBox">
+<div id="code">--------</div>
+<button class="copyBtn" onclick="copyCode()">COPY CODE</button>
+<p id="info">Open WhatsApp > Settings > Linked Devices > Link a Device > Link with phone number > Paste code</p>
 </div>
+
+<div class="footer">Powered by <a href="https://whatsapp.com/channel/0029Vb97vPwChq6GqI44n61S">Simon tech inc</a></div>
+</div>
+
 <script>
+const numInput = document.getElementById('number')
+const btn = document.getElementById('btn')
+const codeEl = document.getElementById('code')
+const box = document.getElementById('codeBox')
+
 async function getCode(){
-  const num=document.getElementById('number').value
-  if(!num){alert("Enter number");return}
-  document.getElementById('code').innerText="WAITING..."
-  const res=await fetch('/pair?number='+num)
-  const data=await res.json()
-  if(data.code){
-    document.getElementById('code').innerText=data.code
-    document.getElementById('info').innerText="Go to WhatsApp > Linked Devices > Link with Phone Number > Enter this code"
-  }else{
-    document.getElementById('code').innerText="ERROR: "+data.error
+  let num = numInput.value.trim().replace(/[^0-9]/g,'')
+  if(num.length < 10){ alert("Enter valid number with country code, e.g 2348122029123"); return }
+  
+  btn.disabled = true
+  btn.innerText = "GENERATING..."
+  codeEl.innerText = "WAITING..."
+  box.style.display = "block"
+
+  try{
+    const res = await fetch(`/pair?number=${num}`)
+    const data = await res.json()
+    if(data.code){
+      codeEl.innerText = data.code
+      btn.innerText = "CODE GENERATED ✓"
+    }else{
+      codeEl.innerText = "FAILED"
+      alert(data.error || "Failed to get code, check server logs")
+      btn.innerText = "TRY AGAIN"
+    }
+  }catch(e){
+    codeEl.innerText = "ERROR"
+    alert("Server not responding")
+    btn.innerText = "TRY AGAIN"
   }
+  btn.disabled = false
+}
+
+function copyCode(){
+  navigator.clipboard.writeText(codeEl.innerText)
+  alert("Code copied: " + codeEl.innerText)
 }
 </script>
 </body>
