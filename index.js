@@ -73,4 +73,4 @@ async function startMainBot(){
     const { handleMessages } = require("./main.js");
     handleMessages(sock);
   }catch(e){ console.log("Main bot error:", e.message); }
-        }
+}
